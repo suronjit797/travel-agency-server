@@ -3,8 +3,7 @@ import { IUser } from './user.interface'
 import UserModel from './user.model'
 import httpStatus from 'http-status'
 
-
-const getAllUsersService = async (): Promise<IResponsePayload<IUser[]>> => {
+export const getAllService = async (): Promise<IResponsePayload<IUser[]>> => {
   const data = await UserModel.find()
 
   return {
@@ -15,7 +14,7 @@ const getAllUsersService = async (): Promise<IResponsePayload<IUser[]>> => {
   }
 }
 
-const getUserService = async (userId: string): Promise<IResponsePayload<IUser>> => {
+export const getSingleService = async (userId: string): Promise<IResponsePayload<IUser>> => {
   const data = await UserModel.findById(userId)
 
   return {
@@ -26,7 +25,7 @@ const getUserService = async (userId: string): Promise<IResponsePayload<IUser>> 
   }
 }
 
-const updateUserService = async (userId: string, body: Partial<IUser>): Promise<IResponsePayload<IUser>> => {
+export const updateService = async (userId: string, body: Partial<IUser>): Promise<IResponsePayload<IUser>> => {
   const data = await UserModel.findByIdAndUpdate(userId, body, { new: true })
 
   return {
@@ -37,7 +36,7 @@ const updateUserService = async (userId: string, body: Partial<IUser>): Promise<
   }
 }
 
-const removeUserService = async (userId: string): Promise<IResponsePayload<IUser>> => {
+export const removeService = async (userId: string): Promise<IResponsePayload<IUser>> => {
   const data = await UserModel.findByIdAndDelete(userId)
 
   return {
@@ -47,12 +46,3 @@ const removeUserService = async (userId: string): Promise<IResponsePayload<IUser
     data,
   }
 }
-
-const userService = {
-  getAllUsersService,
-  getUserService,
-  updateUserService,
-  removeUserService,
-}
-
-export default userService
