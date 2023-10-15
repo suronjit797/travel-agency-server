@@ -5,6 +5,7 @@ import httpStatus from 'http-status'
 import globalError from './app/middleware/globalError'
 import { IErrorPayload } from './shared/globalInterfaces'
 import router from './app/modules/routes'
+import cookieParser from 'cookie-parser'
 
 const app: Application = express()
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(morgan('tiny'))
+app.use(cookieParser())
 
 // router
 app.use('/api/v1', router)

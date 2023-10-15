@@ -13,7 +13,6 @@ const userSchema = new Schema<IUser>(
         type: String,
         required: true,
       },
-      // required: true,
     },
     email: {
       type: String,
@@ -22,6 +21,7 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
+      select: 0,
     },
     address: {
       type: String,
@@ -34,6 +34,7 @@ const userSchema = new Schema<IUser>(
     role: {
       type: String,
       enum: userRoleArr,
+      default: 'user',
       required: true,
     },
   },
