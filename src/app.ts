@@ -17,7 +17,7 @@ app.use(morgan('tiny'))
 app.use('/api/v1', router)
 
 app.get('/', async (req: Request, res: Response) => {
-  res.status(httpStatus.OK).send('Welcome to Travel service')
+  res.status(httpStatus.OK).send('<h1> Welcome to Travel service... </h1>')
 })
 
 app.use(globalError)

@@ -1,19 +1,9 @@
 import { Schema, model } from 'mongoose'
 import { IUser, IUserModel } from './user.interface'
+import { userRoleArr } from '../../../shared/globalConstant'
 
 const userSchema = new Schema<IUser>(
   {
-    address: {
-      type: String,
-      required: true,
-    },
-    budget: {
-      type: Number,
-    },
-    income: {
-      type: Number,
-      default: 0,
-    },
     name: {
       firstName: {
         type: String,
@@ -23,8 +13,17 @@ const userSchema = new Schema<IUser>(
         type: String,
         required: true,
       },
+      // required: true,
+    },
+    email: {
+      type: String,
+      required: true,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    address: {
       type: String,
       required: true,
     },
@@ -34,7 +33,8 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ['seller', 'buyer'],
+      enum: userRoleArr,
+      required: true,
     },
   },
   {

@@ -16,7 +16,7 @@ export type IErrorPayload = {
 export type IResponsePayload<T> = {
   statusCode: number
   success: boolean
-  data: T | null
+  data?: T | null
   message?: string
   meta?: {
     page: number

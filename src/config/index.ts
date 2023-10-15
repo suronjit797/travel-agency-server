@@ -7,4 +7,5 @@ export default {
   PORT: process.env.PORT,
   DB_URI: process.env.DB_URI,
   NODE_ENV: process.env.NODE_ENV,
+  SAULT_ROUND: process.env.SAULT_ROUND || 12,
 }
