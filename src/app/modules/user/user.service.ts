@@ -56,6 +56,21 @@ export const loginService = async (payload: {
   }
 }
 
+export const getProfileService = async (user: IUser): Promise<IResponsePayload<IUser>> => {
+  const data = await UserModel.findById(user._id)
+
+  if (!data) {
+    throw new ApiError(httpStatus.BAD_REQUEST)
+  }
+
+  return {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Profile retrieved  successfully',
+    data,
+  }
+}
+
 export const getAllService = async (): Promise<IResponsePayload<IUser[]>> => {
   const data = await UserModel.find()
 

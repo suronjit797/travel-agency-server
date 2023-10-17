@@ -12,7 +12,8 @@ userRoute.post('/sign-up', globalValidator(userCreateValidatorZod), userControll
 userRoute.post('/login', globalValidator(userLoginValidatorZod), userController.login)
 
 // user
-userRoute.get('/', auth(userRole.admin), userController.getAll)
+userRoute.get('/', auth(userRole.admin, userRole.user), userController.getProfile)
+userRoute.get('/all', auth(userRole.admin), userController.getAll)
 userRoute.get('/:id', auth(userRole.admin), userController.getSingle)
 userRoute.patch('/:id', globalValidator(userUpdateValidatorZod), auth(userRole.admin), userController.updateOne)
 userRoute.delete('/:id', auth(userRole.admin), userController.remove)

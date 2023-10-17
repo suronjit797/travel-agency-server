@@ -4,6 +4,7 @@ import sendResponse from '../../../helper/sendResponse'
 import ApiError from '../../../shared/ApiError'
 import httpStatus from 'http-status'
 import config from '../../../config'
+import { IUser } from './user.interface'
 
 export const signUp: RequestHandler = async (req, res, next) => {
   try {
@@ -38,6 +39,15 @@ export const login: RequestHandler = async (req, res, next) => {
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
     const data = await userService.getAllService()
+    return sendResponse(res, data)
+  } catch (error) {
+    return next(error)
+  }
+}
+export const getProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const data = await userService.getProfileService(req.user as IUser)
+
     return sendResponse(res, data)
   } catch (error) {
     return next(error)

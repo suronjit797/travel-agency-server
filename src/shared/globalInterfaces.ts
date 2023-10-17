@@ -38,10 +38,8 @@ export type IFilter = { [key: string]: object }
 
 export type IPartialSearchableFields = string[]
 
-
 export interface CustomJwtPayload {
-  userId?: string;
-  role?: string;
-  iat?: string;
-  exp?: string;
+  userId?: string
+  iat?: string
+  exp?: string
 }

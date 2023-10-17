@@ -26,7 +26,7 @@ export const auth =
         throw new ApiError(httpStatus.FORBIDDEN, `${isExist.role} is not authorized`)
       }
 
-      req.user = decoded
+      req.user = isExist
       next()
     } catch (error) {
       next(error)
