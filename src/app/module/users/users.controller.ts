@@ -53,7 +53,7 @@ export const loginController: RequestHandler = async (req, res, next) => {
 export const getAllUser: RequestHandler = async (req, res, next) => {
   try {
     const filter = filterHelper(req, ["name", "email", "address", "phoneNumber", "role"], []);
-    const pagination = paginationHelper(req.query)
+    const pagination = paginationHelper(req.query);
 
     const data = await service.getAllUserService(filter, pagination);
 
@@ -106,6 +106,21 @@ export const removeUser: RequestHandler = async (req, res, next) => {
     sendRes(res, httpStatus.OK, {
       success: true,
       message: "User Deleted Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const data = await service.getSingleUserService(user.userId);
+
+    sendRes(res, httpStatus.OK, {
+      success: true,
+      message: "Profile get Successfully",
+      data,
     });
   } catch (error) {
     next(error);

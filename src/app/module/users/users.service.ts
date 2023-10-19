@@ -75,6 +75,7 @@ export const getSingleUserService = async (id: string): Promise<Partial<User> | 
   return result;
 };
 
+
 export const updateUserService = async (
   id: string,
   data: Partial<User>

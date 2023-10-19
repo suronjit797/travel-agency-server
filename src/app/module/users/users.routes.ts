@@ -13,6 +13,7 @@ const userRouter = express.Router();
 
 userRouter.post("/sign-up", globalValidator(userCreateValidatorZod), controller.createUser);
 userRouter.post("/login", globalValidator(userLoginValidatorZod), controller.loginController);
+userRouter.get("/", auth(userRole.admin), controller.getProfile);
 userRouter.get("/all", auth(userRole.admin), controller.getAllUser);
 userRouter.get("/:id", auth(userRole.admin), controller.getSingleUser);
 userRouter.patch(

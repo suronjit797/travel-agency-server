@@ -9,6 +9,7 @@ export const userCreateValidatorZod = z.object({
       password: z.string().min(6).max(18),
       address: z.string(),
       phoneNumber: z.string(),
+      role: z.enum([...(Object.values(userRole) as [string, ...string[]])]).optional(),
     })
     .strict(),
 });
@@ -29,6 +30,6 @@ export const userUpdateValidatorZod = z.object({
     password: z.string().min(6).max(18).optional(),
     address: z.string().optional(),
     phoneNumber: z.string().optional(),
-    role: z.enum([...(Object.keys(userRole) as [string, ...string[]])]).optional(),
+    role: z.enum([...(Object.values(userRole) as [string, ...string[]])]).optional(),
   }),
 });
