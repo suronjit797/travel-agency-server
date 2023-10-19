@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  address     String
+  phoneNumber String
+  role        UserRole @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Package {
+  id              String        @id @default(uuid())
+  title           String
+  destination     String
+  country         String
+  continent       String
+  duration        String
+  date            String
+  amount          String
+  lastBookingDate String
+  image           String
+  ratings         String
+  type            PackageType   @default(BUDGET)
+  status          PackageStatus @default(UPCOMING)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+// enums
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum PackageStatus {
+  AVAILABLE
+  UPCOMING
+}
+
+enum PackageType {
+  LUXURY
+  BUDGET
+}

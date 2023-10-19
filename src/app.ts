@@ -1,43 +1,48 @@
-import express, { Application, Request, Response } from 'express'
-import cors from 'cors'
-import morgan from 'morgan'
-import httpStatus from 'http-status'
-import globalError from './app/middleware/globalError'
-import { IErrorPayload } from './shared/globalInterfaces'
-import router from './app/modules/routes'
-import cookieParser from 'cookie-parser'
+import express, { Application, Request, Response } from "express";
+import cors from "cors";
+import morgan from "morgan";
+import sendRes from "./shared/sendRes";
+import httpStatus from "http-status";
+import router from "./app/module/routes";
+import cookieParser from "cookie-parser";
+import { IErrorPayload } from "./shared/globalInterfaces";
+import globalError from "./app/middleware/globalError";
 
-const app: Application = express()
+const app: Application = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
-app.use(morgan('tiny'))
-app.use(cookieParser())
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("tiny"));
+app.use(cookieParser());
 
-// router
-app.use('/api/v1', router)
 
-app.get('/', async (req: Request, res: Response) => {
-  res.status(httpStatus.OK).send('<h1> Welcome to Travel service... </h1>')
-})
+// home route
+app.get("/", (req: Request, res: Response) =>
+  sendRes(res, httpStatus.OK, { success: true, message: "Welcome to server" })
+);
 
-app.use(globalError)
+// main routing
+app.use("/api/v1", router);
 
-// handle not found route
 
+//global error handler
+app.use(globalError);
+
+// routes not found
 app.use((req: Request, res: Response) => {
   const errorPayload: IErrorPayload = {
     success: false,
-    message: 'Route not found',
+    message: "Route not found",
     errorMessages: [
       {
         path: req.originalUrl,
-        message: 'Route not found',
+        message: "Route not found",
       },
     ],
-  }
-  return res.status(httpStatus.NOT_FOUND).send(errorPayload)
-})
+  };
+  return res.status(404).send(errorPayload);
+});
 
-export default app
+export default app;
+

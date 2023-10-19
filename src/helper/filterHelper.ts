@@ -1,49 +1,44 @@
-import { Request } from 'express'
-import { Document } from 'mongoose'
-import { IPartialSearchableFields } from '../shared/globalInterfaces'
-import { pic } from './paginationHelper'
+import { Request } from "express";
+import { IPartialSearchableFields } from "../shared/globalInterfaces";
+import { pic } from "./paginationHelper";
 
 const filterHelper = (
   req: Request,
-  schemaName: Document,
+  keys: string[],
   partialSearching: IPartialSearchableFields
 ): { [key: string]: object } => {
-  const schemaKeys = Object.keys(schemaName.schema.obj)
-  const filter = pic(req.query, ['query', 'minPrice', 'maxPrice', ...schemaKeys])
-  const { query, minPrice, maxPrice, ...filterData } = filter
-  const andCondition = []
+  const filter = pic(req.query, keys);
+  const { search, ...filterData } = filter;
+  const andCondition = [];
 
-  if (query && partialSearching.length > 0) {
+  // partial searching
+  if (search && partialSearching.length > 0) {
     andCondition.push({
-      $or: partialSearching.map((field) => ({
+      OR: partialSearching.map((field) => ({
         [field]: {
-          $regex: query,
-          $options: 'i',
+          contains: search,
         },
       })),
-    })
+    });
   }
 
   if (Object.keys(filterData).length > 0) {
     andCondition.push({
-      $and: Object.entries(filterData).map(([key, value]) => ({ [key]: value })),
-    })
+      AND: Object.entries(filterData).map(([key, value]) => {
+        if (key === "category") {
+          return { categoryId: value };
+        } else if (key === "minPrice") {
+          return { price: { gte: Number(value) } };
+        } else if (key === "maxPrice") {
+          return { price: { lte: Number(value) } };
+        } else {
+          return { [key]: value };
+        }
+      }),
+    });
   }
 
-  //   min price
-  if (minPrice) {
-    andCondition.push({
-      price: { $gte: minPrice },
-    })
-  }
-  //   max price
-  if (maxPrice) {
-    andCondition.push({
-      price: { $lte: maxPrice },
-    })
-  }
+  return andCondition.length > 0 ? { AND: andCondition } : {};
+};
 
-  return andCondition.length > 0 ? { $and: andCondition } : {}
-}
-
-export default filterHelper
+export default filterHelper;

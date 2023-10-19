@@ -4,7 +4,7 @@ import httpStatus from 'http-status'
 
 const zodErrorHandler = (error: ZodError): IErrorPayload => {
   const errorMessages: IErrorMessages[] = error?.issues?.map((issue: ZodIssue) => ({
-    path: issue.path.join('/'),
+    path:  issue.path.join('/'),
     message: issue.message,
   }))
 
