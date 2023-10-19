@@ -8,6 +8,7 @@ import { paginationHelper } from "../../../helper/paginationHelper";
 
 export const createPackage: RequestHandler = async (req, res, next) => {
   try {
+    console.log(req.body)
     const data = await service.createPackageService(req.body);
 
     sendRes(res, httpStatus.CREATED, {
@@ -16,6 +17,7 @@ export const createPackage: RequestHandler = async (req, res, next) => {
       data,
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };

@@ -3,8 +3,8 @@ import prisma from "../../../shared/prisma";
 import { IPagination } from "../../../shared/globalInterfaces";
 
 export const createPackageService = async (data: Package): Promise<Partial<Package> | null> => {
-  const newUser = await prisma.package.create({ data });
-  const result: Partial<Package> = { ...newUser };
+  const newPackage = await prisma.package.create({ data });
+  const result: Partial<Package> = { ...newPackage };
   return result;
 };
 

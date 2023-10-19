@@ -33,7 +33,7 @@ model Package {
   amount          String
   lastBookingDate String
   image           String
-  ratings         String
+  ratings         String? 
   type            PackageType   @default(BUDGET)
   status          PackageStatus @default(UPCOMING)
   createdAt       DateTime      @default(now())

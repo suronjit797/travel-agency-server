@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Package" ALTER COLUMN "amount" SET DATA TYPE TEXT,
+ALTER COLUMN "ratings" SET DATA TYPE TEXT;

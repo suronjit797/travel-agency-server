@@ -1,35 +1,37 @@
 import { z } from "zod";
-import { userRole } from "../../../shared/globalConstant";
 
-export const userCreateValidatorZod = z.object({
+export const packageCreateValidatorZod = z.object({
   body: z
     .object({
-      name: z.string(),
-      email: z.string().email(),
-      password: z.string().min(6).max(18),
-      address: z.string(),
-      phoneNumber: z.string(),
-      role: z.enum([...(Object.values(userRole) as [string, ...string[]])]).optional(),
+      title: z.string(),
+      destination: z.string(),
+      country: z.string(),
+      continent: z.string(),
+      duration: z.string(),
+      date: z.string(),
+      amount: z.string(),
+      lastBookingDate: z.string(),
+      image: z.string(),
+      ratings: z.string(),
+      type: z.enum(["LUXURY", "BUDGET"]),
+      status: z.enum(["AVAILABLE", "UPCOMING"]),
     })
     .strict(),
 });
 
-export const userLoginValidatorZod = z.object({
-  body: z
-    .object({
-      email: z.string().email(),
-      password: z.string().min(6).max(18),
-    })
-    .strict(),
-});
-
-export const userUpdateValidatorZod = z.object({
+export const packageUpdateValidatorZod = z.object({
   body: z.object({
-    name: z.string().optional(),
-    email: z.string().email().optional(),
-    password: z.string().min(6).max(18).optional(),
-    address: z.string().optional(),
-    phoneNumber: z.string().optional(),
-    role: z.enum([...(Object.values(userRole) as [string, ...string[]])]).optional(),
+    title: z.string().optional(),
+    destination: z.string().optional(),
+    country: z.string().optional(),
+    continent: z.string().optional(),
+    duration: z.string().optional(),
+    date: z.string().optional(),
+    amount: z.string().optional(),
+    lastBookingDate: z.string().optional(),
+    image: z.string().optional(),
+    ratings: z.string().optional(),
+    type: z.enum(["LUXURY", "BUDGET"]).optional(),
+    status: z.enum(["AVAILABLE", "UPCOMING"]).optional(),
   }),
 });
